@@ -3,12 +3,14 @@ import { useConversationsStore } from '@/stores/conversations'
 import { Loading } from './Loading'
 import { SendIcon } from './Icons'
 
-export function Prompt () {
+export function Prompt() {
   const textAreaRef = useRef()
-  const generateComponent = useConversationsStore(state => state.generateComponent)
-  const streaming = useConversationsStore(state => state.streaming)
+  const generateComponent = useConversationsStore(
+    (state) => state.generateComponent
+  )
+  const streaming = useConversationsStore((state) => state.streaming)
 
-  async function handleSubmit (event) {
+  async function handleSubmit(event) {
     event.preventDefault()
 
     const prompt = textAreaRef.current.value.trim()
@@ -47,16 +49,18 @@ export function Prompt () {
           name='prompt'
           type='text'
           placeholder=''
-          className={`resize-none ${streaming ? 'opacity-40 pointer-events-none' : ''} block w-full text-md px-4 py-2 border border-gray-800 rounded-md bg-zinc-900/20 backdrop-blur-3xl sm:text-md shadow-lg h-[42px] text-white outline-none`}
+          className={`resize-none ${
+            streaming ? 'opacity-40 pointer-events-none' : ''
+          } block w-full text-md px-4 py-2 border border-gray-800 rounded-md bg-zinc-900/20 backdrop-blur-3xl sm:text-md shadow-lg h-[42px] text-white outline-none overflow-hidden`}
         />
         <div className='absolute right-4 top-0 h-full flex justify-center items-center'>
-          {streaming
-            ? <Loading />
-            : (
-              <button className='hover:scale-125 transition-all' type='submit'>
-                <SendIcon />
-              </button>
-              )}
+          {streaming ? (
+            <Loading />
+          ) : (
+            <button className='hover:scale-125 transition-all' type='submit'>
+              <SendIcon />
+            </button>
+          )}
         </div>
       </div>
     </form>

@@ -6,7 +6,7 @@ const loadingStates = [
   [true, true, true] // ...
 ]
 
-export function Loading () {
+export function Loading() {
   const [index, setIndex] = useState(0)
 
   useEffect(() => {
