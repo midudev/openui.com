@@ -9,11 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@codesandbox/sandpack-react": "^2.1.2",
+    "@codesandbox/sandpack-themes": "2.0.21",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
     "next": "13.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-wrap-balancer": "0.4.0",
     "zustand": "4.3.6"
   },
   "devDependencies": {

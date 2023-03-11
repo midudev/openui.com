@@ -1,26 +1,43 @@
 import { create } from 'zustand'
 import { APIS } from '@/config/consts'
 
-export const useConversationsStore = create(set => ({
-  response: null,
-  isReplying: false,
-  generateComponent: async ({ prompt, language = 'javascript', framework = 'react' }) => {
-    set({ isReplying: true })
+export const useConversationsStore = create((set, get) => ({
+  code: null,
+  language: 'javascript', // typescript or javascript
+  framework: 'vanilla', // react, vue, angular, vanilla
+  streaming: false,
+  setFramework: (framework) => set({ code: null, framework }),
+  setLanguage: (language) => set({ language }),
+  generateComponent: async ({ prompt }) => {
+    set({ streaming: true })
+
+    const { language, framework } = get(
+      ({ language, framework }) => ({ language, framework })
+    )
 
     const url = `${APIS.GENERATE}?prompt=${prompt}&language=${language}&framework=${framework}`
 
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
+    const eventSource = new EventSource(url)
+    let code = ''
+
+    eventSource.onerror = (error) => {
+      console.error(error)
+      eventSource.close()
+      set(() => ({ streaming: false }))
+    }
+
+    eventSource.onmessage = (event) => {
+      const { data } = event
+
+      if (data === '[DONE]') {
+        set(() => ({ streaming: false }))
+
+        eventSource.close()
+        return
       }
-    })
 
-    const { content } = await response.json()
-
-    set({
-      isReplying: false,
-      response: content
-    })
+      code += JSON.parse(data)
+      set(() => ({ code }))
+    }
   }
 }))
