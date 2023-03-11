@@ -1,6 +1,7 @@
 {
-  "extends": [
-    "./node_modules/standard/eslintrc.json",
-    "next/core-web-vitals"
-  ]
+  "extends": ["./node_modules/standard/eslintrc.json", "next/core-web-vitals"],
+  "rules": {
+    "space-before-function-paren": "off",
+    "multiline-ternary": "off"
+  }
 }
