@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-main {
-  background: black;
+body {
+  background: linear-gradient(to bottom,#111, #000);
 }
