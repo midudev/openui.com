@@ -87,10 +87,10 @@ export function Prompt() {
             <Loading />
           ) : (
             <div className='flex items-center gap-2'>
-              <button className='hover:scale-125 transition-all' type='button' onClick={handleSpeechToText}>
+              <button className='transition-all hover:scale-125' type='button' onClick={handleSpeechToText}>
                 <MicrophoneIcon />
               </button>
-              <button className='hover:scale-125 transition-all' type='submit'>
+              <button className='transition-all hover:scale-125' type='submit'>
                 <SendIcon />
               </button>
             </div>
