@@ -3,7 +3,7 @@ import { ReactIcon, VueIcon, SvelteIcon, JavaScriptIcon } from './Icons'
 
 const FRAMEWORKS = [
   {
-    name: 'JavaScript',
+    name: 'Vanilla',
     icon: <JavaScriptIcon />,
     value: 'vanilla'
   },
@@ -31,10 +31,10 @@ export function SelectFramework() {
   }))
 
   return (
-    <ul className='flex gap-x-2 items-center justify-center'>
+    <ul className='flex items-center gap-x-4'>
       {FRAMEWORKS.map(({ name, icon, value }) => (
         <li key={value}>
-          <label>
+          <label className={`flex flex-col items-center justify-center gap-2 ${framework === value ? 'text-white' : 'text-white/60'}`}>
             <input
               defaultChecked={framework === value}
               onClick={() => setFramework(value)}
@@ -44,7 +44,7 @@ export function SelectFramework() {
               name='framework'
               value={value}
             />
-            <span className='hover:opacity-75 hover:scale-125 transition cursor-pointer opacity-40 peer-checked:opacity-100'>
+            <span className='flex h-16 transition cursor-pointer hover:opacity-75 hover:scale-125 opacity-40 peer-checked:opacity-100'>
               {icon}
             </span>
             {name}
