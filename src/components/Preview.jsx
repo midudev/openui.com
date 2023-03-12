@@ -1,27 +1,26 @@
 import { useConversationsStore } from '@/stores/conversations'
 import { Sandpack } from '@codesandbox/sandpack-react'
-import { amethyst } from '@codesandbox/sandpack-themes'
-
+import { CopyIcon } from './Icons'
 
 const defaultComponent = {
   vanilla: `<div style="display:flex;justify-content:center;margin-top:1rem">
-   Aún no se creo una peticion
+   Aún no se creó una peticion
    </div>`,
   react: `export default function Component () {
   return (
     <div style={{display:"flex","justify-content":"center","margin-top": "1rem"}}>
-    Aún no se creo una peticion
+    Aún no se creó una peticion
     </div>
   )
 }`,
   vue: `<template>
   <div style="display:flex;justify-content:center;margin-top:1rem;">
-      Aún no se creo una peticion
+      Aún no se creó una peticion
   </div>
 </template>
 <script setup></script>`,
   svelte: `<div style="display:flex;justify-content:center;margin-top:1rem">
-Aún no se creo una peticion
+Aún no se creó una peticion
 </div>`
 }
 
@@ -131,19 +130,32 @@ export default function Preview() {
   const files = generatePlaygroundFiles({ code, framework })
   const options = generateOptions({ language, framework })
 
+  const handleCopy = () => {
+    navigator.clipboard.writeText(code)
+  }
+
   return (
-    <div className='mt-10'>
+    <div>
       {files !== null && (
-        <Sandpack
-          options={{
-            externalResources: ['https://cdn.tailwindcss.com'],
-            wrapContent: true,
-            ...options
-          }}
-          template={framework}
-          theme={amethyst}
-          files={files}
-        />
+        <>
+          <Sandpack
+            options={{
+              externalResources: ['https://cdn.tailwindcss.com'],
+              wrapContent: true,
+              ...options
+            }}
+            template={framework}
+            theme='dark'
+            files={files}
+          />
+          <footer>
+            <button
+              className='inline-flex items-center justify-center h-10 gap-1 pl-4 pr-3 text-sm font-semibold text-black transition duration-200 bg-white border border-white rounded-md select-none text-slate-11 hover:bg-slate-5 focus:ring-2 focus:ring-slate-7 focus:outline-none focus:bg-slate-6 disabled:hover:bg-slate-4 disabled:cursor-not-allowed disabled:opacity-70'
+              onClick={handleCopy}
+            >Copiar código<span class='text-[#70757E]'><CopyIcon /></span>
+            </button>
+          </footer>
+        </>
       )}
     </div>
   )
