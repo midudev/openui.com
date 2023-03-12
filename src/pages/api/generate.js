@@ -2,7 +2,7 @@ const { OPENAI_API_KEY } = process.env
 
 const API_URL = 'https://api.openai.com/v1/chat/completions'
 
-export default async function handler (req, res) {
+export default async function handler(req, res) {
   console.log('new request')
   if (req.method !== 'GET') return res.status(405).end()
 
@@ -21,18 +21,48 @@ export default async function handler (req, res) {
   // - system: Como si el ROOT estuviese escribiendo
 
   const messages = [
-    { role: 'system', content: 'Asume que eres developer y estás generando código para ser usado en producción. Sólo genera el código sin explicaciones. Por defecto, usa HTML y CSS si no se te indica lo contrario.' },
-    { role: 'user', content: 'Crea un botón. Con HTML, CSS y JS.' },
-    { role: 'assistant', content: '<button>Button</button>\ninfo:Botón con sólo HTML.' },
-    { role: 'user', content: 'Crea un botón que diga "Hola", que sea redondeado con fondo rojo. Con HTML, CSS y JS.' },
-    { role: 'assistant', content: '<button style="background: red; color: white; border-radius: 9999px;">Hola</button>\ninfo:Botón con HTML y CSS en línea con estilos.' },
-    { role: 'user', content: 'Crea un botón con Tailwind. Con HTML, CSS y JS' },
-    { role: 'assistant', content: '<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Button</button>\ninfo: Botón usando clases de Tailwind de color azul' },
-    { role: 'user', content: 'Crea un botón con Tailwind que diga "Hola". Con HTML, CSS y JS.' },
-    { role: 'assistant', content: '<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Hola</button>\ninfo:Botón usando clases de Tailwind que dice Hola y es de color azul' },
-    { role: 'user', content: 'Crea un botón que al hacer click aparezca un alert. Con React.' },
     {
-      role: 'assistant', content: `export default function Button () {
+      role: 'system',
+      content:
+        'Asume que eres developer y estás generando código para ser usado en producción. Sólo genera el código sin explicaciones. Por defecto, usa HTML y CSS si no se te indica lo contrario.'
+    },
+    { role: 'user', content: 'Crea un botón. Con HTML, CSS y JS.' },
+    {
+      role: 'assistant',
+      content: '<button>Button</button>\ninfo:Botón con sólo HTML.'
+    },
+    {
+      role: 'user',
+      content:
+        'Crea un botón que diga "Hola", que sea redondeado con fondo rojo. Con HTML, CSS y JS.'
+    },
+    {
+      role: 'assistant',
+      content:
+        '<button style="background: red; color: white; border-radius: 9999px;">Hola</button>\ninfo:Botón con HTML y CSS en línea con estilos.'
+    },
+    { role: 'user', content: 'Crea un botón con Tailwind. Con HTML, CSS y JS' },
+    {
+      role: 'assistant',
+      content:
+        '<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Button</button>\ninfo: Botón usando clases de Tailwind de color azul'
+    },
+    {
+      role: 'user',
+      content: 'Crea un botón con Tailwind que diga "Hola". Con HTML, CSS y JS.'
+    },
+    {
+      role: 'assistant',
+      content:
+        '<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Hola</button>\ninfo:Botón usando clases de Tailwind que dice Hola y es de color azul'
+    },
+    {
+      role: 'user',
+      content: 'Crea un botón que al hacer click aparezca un alert. Con React.'
+    },
+    {
+      role: 'assistant',
+      content: `export default function Button () {
   return <button onClick={() => alert("Hola")}>Button</button>
 }\ninfo:Botón de React que al hacer click muestra un alert`
     }
@@ -81,7 +111,7 @@ export default async function handler (req, res) {
     const transformedChunk = chunk
       .split('\n')
       .filter(Boolean)
-      .map(line => line.replace('data: ', '').trim())
+      .map((line) => line.replace('data: ', '').trim())
 
     for (const data of transformedChunk) {
       if (data === '[DONE]') {

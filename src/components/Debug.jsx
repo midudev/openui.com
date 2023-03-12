@@ -1,7 +1,7 @@
 import { useConversationsStore } from '@/stores/conversations'
 import { useState } from 'react'
 
-export function Debug () {
+export function Debug() {
   const [open, setOpen] = useState(true)
 
   const { code, language, framework } = useConversationsStore(

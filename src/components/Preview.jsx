@@ -2,6 +2,7 @@ import { useConversationsStore } from '@/stores/conversations'
 import { Sandpack } from '@codesandbox/sandpack-react'
 import { amethyst } from '@codesandbox/sandpack-themes'
 
+
 const defaultComponent = {
   vanilla: `<div style="display:flex;justify-content:center;margin-top:1rem">
    Aún no se creo una peticion
@@ -23,7 +24,8 @@ const defaultComponent = {
 Aún no se creo una peticion
 </div>`
 }
-function generatePlaygroundFiles ({ code, framework }) {
+
+function generatePlaygroundFiles({ code, framework }) {
   code ??= ''
   code = code.replace(/`/g, '\\`')
 
@@ -62,12 +64,14 @@ export default function App () {
         code: `${code ? code.trim() : defaultComponent.vue}`
       },
       '/src/App.vue': {
-        code: `<template>
-    <Component />
-  </template>
-  <script setup>
-    import Component from './Component.vue'
-  </script>`
+        code: `
+        <template>
+          <Component />
+        </template>
+        <script setup>
+          import Component from './Component.vue'
+        </script>
+      `
       }
     }
   }
@@ -83,7 +87,6 @@ export default function App () {
 </script>
 
 <Component />`
-
       }
     }
   }
@@ -91,7 +94,7 @@ export default function App () {
   return {}
 }
 
-function generateOptions ({ language, framework }) {
+function generateOptions({ language, framework }) {
   if (framework === 'vanilla') {
     return {
       activeFile: '/index.js'
@@ -120,7 +123,7 @@ function generateOptions ({ language, framework }) {
   }
 }
 
-export default function Preview () {
+export default function Preview() {
   const { code, language, framework } = useConversationsStore(
     ({ code, language, framework }) => ({ code, language, framework })
   )
@@ -130,20 +133,18 @@ export default function Preview () {
 
   return (
     <div className='mt-10'>
-      {
-        files !== null && (
-          <Sandpack
-            options={{
-              externalResources: ['https://cdn.tailwindcss.com'],
-              wrapContent: true,
-              ...options
-            }}
-            template={framework}
-            theme={amethyst}
-            files={files}
-          />
-        )
-      }
+      {files !== null && (
+        <Sandpack
+          options={{
+            externalResources: ['https://cdn.tailwindcss.com'],
+            wrapContent: true,
+            ...options
+          }}
+          template={framework}
+          theme={amethyst}
+          files={files}
+        />
+      )}
     </div>
   )
 }
