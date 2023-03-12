@@ -11,9 +11,10 @@ export const useConversationsStore = create((set, get) => ({
   generateComponent: async ({ prompt }) => {
     set({ streaming: true })
 
-    const { language, framework } = get(
-      ({ language, framework }) => ({ language, framework })
-    )
+    const { language, framework } = get(({ language, framework }) => ({
+      language,
+      framework
+    }))
 
     const url = `${APIS.GENERATE}?prompt=${prompt}&language=${language}&framework=${framework}`
 
