@@ -17,8 +17,6 @@ export function Prompt() {
   async function handleSubmit(event) {
     event?.preventDefault()
 
-    const prompt = textAreaRef.current.value.trim()
-
     generateComponent({ prompt })
   }
 
