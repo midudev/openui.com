@@ -3,8 +3,8 @@ import { APIS } from '@/config/consts'
 
 export const useConversationsStore = create((set, get) => ({
   code: null,
-  language: null, // typescript or javascript
-  framework: null, // react, vue, angular, vanilla
+  language: 'javascript', // typescript or javascript
+  framework: 'vanilla', // react, vue, angular, vanilla
   streaming: false,
   step: 1,
   setFramework: (framework) => {
