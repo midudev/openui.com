@@ -4,7 +4,7 @@ import { Blob } from '@/components/Blobs'
 import { useConversationsStore } from '@/stores/conversations'
 import Preview from '@/components/Preview'
 import { SelectFramework } from '@/components/SelectFramework'
-import { Debug } from '@/components/Debug'
+// import { Debug } from '@/components/Debug'
 import { SelectLanguage } from '@/components/SelectLanguage'
 
 // import { Inter } from 'next/font/google'
@@ -26,9 +26,10 @@ export default function Home() {
       </Head>
 
       <div className='relative'>
-        <div className='relative z-10 flex flex-col justify-center max-w-5xl min-h-screen px-4 mx-auto h-screen-ios sm:px-8 md:max-w-4xl'>
-          <main className='w-full mx-auto'>
-            <h1 className='mt-2 bg-gradient-to-br from-white to-slate-10 bg-clip-text text-transparent text-[35px] leading-[42px] sm:text-6xl tracking-[-0.64px] sm:leading-[68px] sm:tracking-[-0.896px] font-bold mb-12 animate-delay-200 animate-duration-1000 animate-fadeIn text-center'>
+        <div className='flex flex-col justify-center max-w-5xl min-h-screen px-4 mx-auto h-screen-ios sm:px-8 md:max-w-4xl'>
+          <Blob className='absolute top-0 2xl:top-10 right-10 sm:right-[10rem] rig 2xl:right-96 bg-purple-500' />
+          <div className='flex w-full justify-center'>
+            <h1 className='absolute z-100 top-16 2xl:top-[12rem] mt-2 bg-gradient-to-br from-white to-slate-10 bg-clip-text text-transparent text-[35px] leading-[42px] sm:text-6xl tracking-[-0.64px] sm:leading-[68px] sm:tracking-[-0.896px] font-bold mb-12 animate-delay-200 animate-duration-1000 animate-fadeIn text-center'>
               <span className='inline-block max-w-[700px] align-top'>
                 Genera tus{' '}
                 <span className='bg-clip-text bg-gradient-to-b from-purple-200 via-purple-400 to-purple-800'>
@@ -37,15 +38,15 @@ export default function Home() {
                 <br />
                 con{' '}
                 <span className='relative bg-clip-text bg-gradient-to-b from-purple-200 via-purple-400 to-purple-800'>
-                  <Blob className='absolute right-0 bg-purple-500 -top-[200%]' />
                   Inteligencia Artificial
                 </span>
               </span>
             </h1>
-
+          </div>
+          <main className='relative w-full mx-auto'>
             <div className='w-full mx-auto animate-delay-500 animate-duration-1000 animate-fadeIn'>
               <Prompt />
-              <div className='flex items-center justify-center mt-4 gap-x-16'>
+              <div className='flex flex-col items-center justify-center mt-4 gap-x-16 sm:flex-row'>
                 <SelectFramework />
                 <SelectLanguage />
               </div>
@@ -59,9 +60,8 @@ export default function Home() {
                 </section>
               )}
             </div>
-
             <footer
-              className={`fixed bottom-0 left-0 right-0 block pb-20 mt-10 text-center animate-delay-1000 opacity-60 text-white/80 ${
+              className={`fixed z-0 bottom-0 left-0 right-0 block pb-20 mt-10 text-center animate-delay-1000 opacity-60 text-white/80 ${
                 code ? 'animate-fadeOut' : 'animate-delay-500 animate-fadeIn'
               }`}
             >

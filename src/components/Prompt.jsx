@@ -41,7 +41,7 @@ export function Prompt() {
           type='text'
           className={`resize-none pr-10 ${
             streaming ? 'opacity-40 pointer-events-none' : ''
-          } placeholder-white/30 rounded-2xl block w-full text-md px-6 text-xl py-4 border border-zinc-600 bg-white/5 backdrop-blur-3xl sm:text-md shadow-lg text-white outline-none overflow-hidden transition ring-white/40 focus:ring-2`}
+          } placeholder-white/30 rounded-2xl block w-full text-md px-6 text-xl py-4 border border-zinc-600 bg-black backdrop-blur-3xl sm:text-md shadow-lg text-white outline-none overflow-hidden transition ring-white/40 focus:ring-2`}
         />
         <div className='absolute top-0 flex items-center justify-center h-full right-4'>
           {streaming ? (

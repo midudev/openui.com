@@ -10,7 +10,7 @@ export function Select({ disabled, list, label, value, update, selected }) {
   return (
     <Listbox disabled={disabled} value={value} onChange={update}>
       {({ open }) => (
-        <div className={`${disabled ? 'opacity-50' : ''} flex items-center justify-center gap-x-2`}>
+        <div className={`${disabled ? 'opacity-50' : ''} flex items-center justify-center gap-x-2 mt-3 sm:mt-0`}>
           <Listbox.Label className='block text-sm font-medium text-white'>{label}</Listbox.Label>
           <div className='relative text-center'>
 
