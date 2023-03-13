@@ -26,7 +26,7 @@ export default async function handler(req, res) {
       content:
         'Asume que eres developer y estás generando código para ser usado en producción. Sólo genera el código sin explicaciones. Por defecto, usa HTML y CSS si no se te indica lo contrario.'
     },
-    { role: 'user', content: 'Crea un botón. Con HTML, CSS y JS.' },
+    { role: 'user', content: 'Crea un botón.' },
     {
       role: 'assistant',
       content: '<button>Button</button>\ninfo:Botón con sólo HTML.'
@@ -68,7 +68,15 @@ export default async function handler(req, res) {
     }
   ]
 
-  const promptToSend = `${prompt}. Con ${framework} y ${language}.`
+  let promptToSend = prompt
+
+  if (framework !== 'vanilla') {
+    promptToSend = `${prompt}. Para ${framework}.`
+  }
+
+  if (language !== 'javascript') {
+    promptToSend = `${prompt}. Con ${language}.`
+  }
 
   const response = await fetch(API_URL, {
     method: 'POST',
