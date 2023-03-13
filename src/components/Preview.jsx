@@ -111,6 +111,28 @@ function generateOptions({ language, framework }) {
   }
 }
 
+function generateCustomSetup({ code }) {
+  if (!code) return null
+
+  const regex = /import\s*(?:{[^{}]*}|\*\s+as\s+\w+)\s*from\s*['"]([^'"]+)['"]/g
+  // get all matches of import statements
+  const matches = code.matchAll(regex)
+  // get all import statements
+  const imports = Array.from(matches, (m) => {
+    const [, dependency] = m
+    // remove path from dependency
+    const [name, org] = dependency.split('/')
+    return name.startsWith('@') ? `${name}/${org}` : name
+  })
+
+  const dependencies = {}
+  imports.forEach(dep => {
+    if (dep === 'react') return
+    dependencies[dep] = 'latest'
+  })
+  return { dependencies }
+}
+
 export default function Preview() {
   const { code, language, framework } = useConversationsStore(
     ({ code, language, framework }) => ({ code, language, framework })
@@ -118,6 +140,7 @@ export default function Preview() {
 
   const files = generatePlaygroundFiles({ code, framework })
   const options = generateOptions({ language, framework })
+  const customSetup = generateCustomSetup({ code })
 
   const handleCopy = () => {
     const promise = navigator.clipboard.writeText(code)
@@ -133,6 +156,7 @@ export default function Preview() {
       {files !== null && (
         <>
           <Sandpack
+            customSetup={customSetup}
             options={{
               externalResources: ['https://cdn.tailwindcss.com'],
               wrapContent: true,
