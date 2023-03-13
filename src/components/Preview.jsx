@@ -1,27 +1,16 @@
 import { useConversationsStore } from '@/stores/conversations'
 import { Sandpack } from '@codesandbox/sandpack-react'
+import { toast } from 'sonner'
 import { CopyIcon } from './Icons'
 
 const defaultComponent = {
-  vanilla: `<div style="display:flex;justify-content:center;margin-top:1rem">
-   Aún no se creó una peticion
-   </div>`,
+  vanilla: '',
   react: `export default function Component () {
-  return (
-    <div style={{display:"flex","justify-content":"center","margin-top": "1rem"}}>
-    Aún no se creó una peticion
-    </div>
-  )
+  return null
 }`,
-  vue: `<template>
-  <div style="display:flex;justify-content:center;margin-top:1rem;">
-      Aún no se creó una peticion
-  </div>
-</template>
+  vue: `<template></template>
 <script setup></script>`,
-  svelte: `<div style="display:flex;justify-content:center;margin-top:1rem">
-Aún no se creó una peticion
-</div>`
+  svelte: ''
 }
 
 function generatePlaygroundFiles({ code, framework }) {
@@ -131,7 +120,12 @@ export default function Preview() {
   const options = generateOptions({ language, framework })
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(code)
+    const promise = navigator.clipboard.writeText(code)
+    toast.promise(promise, {
+      loading: 'Cargando...',
+      success: () => 'Código copiado al portapapeles',
+      error: 'Error copiando el código al portapapeles'
+    })
   }
 
   return (
@@ -148,11 +142,11 @@ export default function Preview() {
             theme='dark'
             files={files}
           />
-          <footer>
+          <footer className='mt-4'>
             <button
-              className='inline-flex items-center justify-center h-10 gap-1 pl-4 pr-3 text-sm font-semibold text-black transition duration-200 bg-white border border-white rounded-md select-none text-slate-11 hover:bg-slate-5 focus:ring-2 focus:ring-slate-7 focus:outline-none focus:bg-slate-6 disabled:hover:bg-slate-4 disabled:cursor-not-allowed disabled:opacity-70'
+              className='inline-flex items-center justify-center h-10 gap-1 pl-4 pr-3 text-sm font-semibold text-black transition duration-200 bg-white border border-white rounded-md select-none hover:text-white hover:bg-transparent disabled:opacity-70'
               onClick={handleCopy}
-            >Copiar código<span class='text-[#70757E]'><CopyIcon /></span>
+            >Copiar código<span className='opacity-70'><CopyIcon /></span>
             </button>
           </footer>
         </>
