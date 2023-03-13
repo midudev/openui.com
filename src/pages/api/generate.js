@@ -26,10 +26,11 @@ export default async function handler(req, res) {
       content:
         'Asume que eres developer y estás generando código para ser usado en producción. Sólo genera el código sin explicaciones. Por defecto, usa HTML y CSS si no se te indica lo contrario.'
     },
-    { role: 'user', content: 'Crea un botón.' },
+    { role: 'user', content: 'Crea un botón azul.' },
     {
       role: 'assistant',
-      content: '<button>Button</button>\ninfo:Botón con sólo HTML.'
+      content:
+        '<button style="background: blue; color: white;">Button</button>\ninfo:Botón con sólo HTML.'
     },
     {
       role: 'user',
@@ -129,20 +130,11 @@ export default async function handler(req, res) {
       try {
         const json = JSON.parse(data)
         const { content } = json.choices?.[0]?.delta
-        console.log({ content })
         content && res.write(`data: ${JSON.stringify(content)}\n\n`)
         // res.write(`data: ${JSON.stringify({ content })}\n\n`)
       } catch (error) {
-        console.log(data)
         console.error(error)
       }
     }
   }
-
-  /*
-  const { usage, choices } = await response.json()
-  const { content } = choices?.[0]?.message
-
-  return res.status(200).json({ content })
-  */
 }

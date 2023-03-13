@@ -8,20 +8,15 @@ export function Prompt() {
   const generateComponent = useConversationsStore(
     (state) => state.generateComponent
   )
+  const setPrompt = useConversationsStore(
+    (state) => state.setPrompt
+  )
   const streaming = useConversationsStore((state) => state.streaming)
+  const prompt = useConversationsStore((state) => state.prompt)
 
   async function handleSubmit(event) {
     event.preventDefault()
-
-    const prompt = inputRef.current.value.trim()
     generateComponent({ prompt })
-  }
-
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault()
-      handleSubmit(event)
-    }
   }
 
   useEffect(() => {
@@ -32,7 +27,11 @@ export function Prompt() {
     <form onSubmit={handleSubmit}>
       <div className='relative block'>
         <input
-          onKeyDown={handleKeyDown}
+          value={prompt}
+          onChange={(event) => {
+            const { value } = event.target
+            setPrompt(value)
+          }}
           disabled={streaming}
           ref={inputRef}
           autoFocus
