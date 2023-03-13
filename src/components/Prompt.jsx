@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useConversationsStore } from '@/stores/conversations'
 import { Loading } from './Loading'
-import { SendIcon } from './Icons'
+import { MicrophoneIcon, SendIcon } from './Icons'
 
 export function Prompt() {
   const inputRef = useRef()
@@ -15,13 +15,43 @@ export function Prompt() {
   const prompt = useConversationsStore((state) => state.prompt)
 
   async function handleSubmit(event) {
-    event.preventDefault()
+    event?.preventDefault()
+
     generateComponent({ prompt })
   }
 
   useEffect(() => {
     inputRef.current.focus()
   }, [])
+
+  function handleSpeechToText() {
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition
+
+    if (!SpeechRecognition) {
+      alert('Speech Recognition is not supported by your browser')
+      return
+    }
+
+    textAreaRef.current.value = ''
+
+    const recognition = new SpeechRecognition()
+    recognition.interimResults = true
+    recognition.lang = 'es-ES'
+
+    recognition.addEventListener('result', (e) => {
+      const transcript = Array.from(e.results)
+        .map((result) => result[0])
+        .map((result) => result.transcript)
+        .join('')
+
+      textAreaRef.current.value = transcript
+    })
+
+    recognition.addEventListener('end', handleSubmit)
+
+    recognition.start()
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -47,9 +77,14 @@ export function Prompt() {
           {streaming ? (
             <Loading />
           ) : (
-            <button className='transition-all hover:scale-125' type='submit'>
-              <SendIcon />
-            </button>
+            <div className='flex items-center gap-2'>
+              <button className='transition-all hover:scale-125' type='button' onClick={handleSpeechToText}>
+                <MicrophoneIcon />
+              </button>
+              <button className='transition-all hover:scale-125' type='submit'>
+                <SendIcon />
+              </button>
+            </div>
           )}
         </div>
       </div>
