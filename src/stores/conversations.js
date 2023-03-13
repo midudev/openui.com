@@ -3,24 +3,33 @@ import { APIS } from '@/config/consts'
 
 export const useConversationsStore = create((set, get) => ({
   code: null,
-  language: null, // typescript or javascript
-  framework: null, // react, vue, angular, vanilla
+  language: 'javascript', // typescript or javascript
+  framework: 'vanilla', // react, vue, angular, vanilla
   streaming: false,
-  step: 1,
+  prompt: '',
+  setPrompt: (prompt) => {
+    set({ code: null, prompt })
+  },
   setFramework: (framework) => {
-    const { step } = get()
-    const newStep = step < 2 ? 2 : step
-    set({ code: null, framework, step: newStep })
+    const { prompt, generateComponent } = get()
+    set({ code: null, framework })
+    prompt && generateComponent({ prompt, framework })
   },
   setLanguage: (language) => {
-    const { step } = get()
-    const newStep = step < 3 ? 3 : step
-    set({ code: null, language, step: newStep })
+    const { prompt, generateComponent } = get()
+    set({ code: null, language })
+    prompt && generateComponent({ prompt, language })
   },
-  generateComponent: async ({ prompt }) => {
-    set({ streaming: true, step: 4 })
+  generateComponent: async ({
+    prompt,
+    language: overwriteLanguage,
+    framework: overwriteFramework
+  }) => {
+    set({ streaming: true })
 
-    const { language, framework } = get()
+    const { language: stateLanguage, framework: stateFramework } = get()
+    const language = overwriteLanguage ?? stateLanguage
+    const framework = overwriteFramework ?? stateFramework
 
     const url = `${APIS.GENERATE}?prompt=${prompt}&language=${language}&framework=${framework}`
 

@@ -1,7 +1,8 @@
 import { useConversationsStore } from '@/stores/conversations'
 import { JavaScriptIcon, TypeScriptIcon } from './Icons'
+import { Select } from './Select'
 
-const FRAMEWORKS = [
+const LANGUAGES = [
   {
     name: 'JavaScript',
     icon: <JavaScriptIcon />,
@@ -15,31 +16,22 @@ const FRAMEWORKS = [
 ]
 
 export function SelectLanguage() {
-  const { language, setLanguage } = useConversationsStore((state) => ({
+  const { language, setLanguage, streaming } = useConversationsStore((state) => ({
     language: state.language,
-    setLanguage: state.setLanguage
+    setLanguage: state.setLanguage,
+    streaming: state.streaming
   }))
 
+  const selected = LANGUAGES.find((f) => f.value === language)
+
   return (
-    <ul className='flex items-center gap-x-4'>
-      {FRAMEWORKS.map(({ name, icon, value }) => (
-        <li key={value}>
-          <label className={`flex flex-col items-center justify-center gap-2 ${language === value ? 'text-white' : 'text-white/60'}`}>
-            <input
-              onClick={() => setLanguage(value)}
-              className='peer'
-              hidden
-              type='radio'
-              name='framework'
-              value={value}
-            />
-            <span className={`flex h-16 transition cursor-pointer hover:opacity-75 hover:scale-125 ${language === value ? 'opacity-100' : 'opacity-40'}`}>
-              {icon}
-            </span>
-            {name}
-          </label>
-        </li>
-      ))}
-    </ul>
+    <Select
+      disabled={streaming}
+      list={LANGUAGES}
+      label='Lenguaje:'
+      value={language}
+      update={setLanguage}
+      selected={selected}
+    />
   )
 }
