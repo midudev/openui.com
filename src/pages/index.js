@@ -1,11 +1,11 @@
 import Head from 'next/head'
-import { Prompt } from '@/components/Prompt'
+
 import { Blob } from '@/components/Blobs'
-import { useConversationsStore } from '@/stores/conversations'
 import Preview from '@/components/Preview'
+import { Prompt } from '@/components/Prompt'
 import { SelectFramework } from '@/components/SelectFramework'
-import { Debug } from '@/components/Debug'
 import { SelectLanguage } from '@/components/SelectLanguage'
+import { useConversationsStore } from '@/stores/conversations'
 
 // import { Inter } from 'next/font/google'
 // const inter = Inter({ subsets: ['latin'] })
@@ -59,30 +59,30 @@ export default function Home() {
                 </section>
               )}
             </div>
-
-            <footer
-              className={`fixed bottom-0 left-0 right-0 block pb-20 mt-10 text-center animate-delay-1000 opacity-60 text-white/80 ${
-                code ? 'animate-fadeOut' : 'animate-delay-500 animate-fadeIn'
-              }`}
-            >
-              Proyecto realizado por{' '}
-              <a
-                className='text-white hover:underline'
-                href='https://twitter.com/midudev'
-              >
-                @midudev
-              </a>{' '}
-              &bull;{' '}
-              <a
-                className='text-white hover:underline'
-                href='https://twitch.tv/midudev'
-              >
-                Twitch
-              </a>
-            </footer>
           </main>
         </div>
       </div>
+
+      <footer
+        className={`fixed bottom-0 left-0 right-0 block pb-20 mt-10 text-center animate-delay-1000 opacity-60 text-white/80 ${
+          code ? 'animate-fadeOut' : 'animate-delay-500 animate-fadeIn'
+        }`}
+      >
+        Proyecto realizado por{' '}
+        <a
+          className='text-white hover:underline'
+          href='https://twitter.com/midudev'
+        >
+          @midudev
+        </a>{' '}
+        &bull;{' '}
+        <a
+          className='text-white hover:underline'
+          href='https://twitch.tv/midudev'
+        >
+          Twitch
+        </a>
+      </footer>
     </>
   )
 }
